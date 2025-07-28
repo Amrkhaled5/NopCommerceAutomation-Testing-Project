@@ -1,0 +1,19 @@
+<!DOCTYPE suite SYSTEM "https://testng.org/testng-1.0.dtd">
+<suite name="FullSuite" parallel="false">
+    <test name="SequentialTests">
+        <classes>
+            <!-- Register tests -->
+            <class name="Register.RegisterTest"/>
+
+            <!-- Login tests -->
+            <class name="Login.LoginTest"/>
+
+            <!-- Home page tests -->
+            <class name="Home.CurrenciesTest"/>
+            <class name="Home.FollowUsTest"/>
+            <class name="Home.SearchTest"/>
+            <class name="Home.SliderTest"/>
+            <class name="Home.WishlistTest"/>
+        </classes>
+    </test>
+</suite>
