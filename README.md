@@ -16,6 +16,7 @@ This project automates end-to-end testing scenarios for an e-commerce applicatio
 - **Design Pattern:** Page Object Model (POM)
 - **Build Tool:** Maven (implied)
 - **WebDriver Management:** WebDriverManager
+
 ## 📁 Project Structure
 
 ```
@@ -44,6 +45,8 @@ src/
 │   │   └── LoginTest.java             # User authentication tests
 │   └── Register/
 │       └── RegisterTest.java          # User registration tests
+│
+└── testng.xml                         # TestNG suite configuration
 ```
 
 ## ✨ Key Features
@@ -60,6 +63,7 @@ src/
 - **Base Classes:** Reusable components for pages and tests
 - **Wait Strategies:** Explicit waits for stable test execution
 - **Assertions:** Both hard and soft assertions using TestNG
+- **Sequential Test Execution:** Organized test suite with TestNG XML configuration
 
 ## 🚦 Getting Started
 
@@ -69,28 +73,36 @@ src/
 - Chrome browser (primary)
 - IDE (IntelliJ IDEA/Eclipse recommended)
 
-### Installation
+## 📄 TestNG Configuration
 
-1. **Clone the repository:**
-   ```bash
-   git clone <repository-url>
-   cd selenium-automation-project
-   ```
+The project includes a `testng.xml` file that orchestrates the execution of all test packages in a sequential manner:
 
-2. **Install dependencies:**
-   ```bash
-   mvn clean install
-   ```
+```xml
+<!DOCTYPE suite SYSTEM "https://testng.org/testng-1.0.dtd">
+<suite name="FullSuite" parallel="false">
+    <test name="SequentialTests">
+        <classes>
+            <!-- Register tests -->
+            <class name="Register.RegisterTest"/>
 
-3. **Run all tests:**
-   ```bash
-   mvn test
-   ```
+            <!-- Login tests -->
+            <class name="Login.LoginTest"/>
 
-4. **Run specific test class:**
-   ```bash
-   mvn test -Dtest=LoginTest
-   ```
+            <!-- Home page tests -->
+            <class name="Home.CurrenciesTest"/>
+            <class name="Home.FollowUsTest"/>
+            <class name="Home.SearchTest"/>
+            <class name="Home.SliderTest"/>
+            <class name="Home.WishlistTest"/>
+        </classes>
+    </test>
+</suite>
+```
+
+### Suite Configuration Details
+- **Sequential Execution:** `parallel="false"` ensures tests run one after another
+- **Organized Flow:** Tests are arranged logically starting with user registration, then login, followed by feature tests
+- **Complete Coverage:** All test classes are included in a single executable suite
 
 ## 📋 Test Scenarios
 
@@ -104,3 +116,25 @@ src/
 | **Social Media** | External integrations | Facebook, Twitter, YouTube, RSS links |
 | **UI Components** | Interactive elements | Homepage slider navigation |
 
+## 📊 Test Execution Flow
+
+1. **Registration Tests** - Create new user accounts
+2. **Login Tests** - Authenticate existing users
+3. **Currency Tests** - Validate currency switching functionality
+4. **Social Media Tests** - Verify external link integrations
+5. **Search Tests** - Test product search capabilities
+6. **Slider Tests** - Validate homepage UI components
+7. **Wishlist Tests** - Test product wishlist features
+
+## 🔧 Customization
+
+### Adding New Tests
+1. Create test class in appropriate package (`Home/`, `Login/`, `Register/`)
+2. Add the class to `testng.xml` in desired execution order
+3. Follow the existing Page Object Model pattern
+
+### Modifying Execution Order
+Edit the `testng.xml` file to rearrange the `<class>` elements in your preferred sequence.
+
+### Parallel Execution
+To enable parallel execution, change `parallel="false"` to `parallel="classes"` or `parallel="methods"` in the suite configuration.
