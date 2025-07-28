@@ -16,8 +16,6 @@ This project automates end-to-end testing scenarios for an e-commerce applicatio
 - **Design Pattern:** Page Object Model (POM)
 - **Build Tool:** Maven (implied)
 - **WebDriver Management:** WebDriverManager
-- **Browser Support:** Chrome (primary), Firefox, Edge
-
 ## 📁 Project Structure
 
 ```
@@ -61,7 +59,6 @@ src/
 - **Page Object Model:** Clean separation of page logic and tests
 - **Base Classes:** Reusable components for pages and tests
 - **Wait Strategies:** Explicit waits for stable test execution
-- **Cross-browser Support:** Chrome, Firefox, Edge
 - **Assertions:** Both hard and soft assertions using TestNG
 
 ## 🚦 Getting Started

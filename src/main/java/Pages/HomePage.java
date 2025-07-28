@@ -28,6 +28,7 @@ public class HomePage extends BasePage{
     //Slider Locator
     private By firstSliderLink = By.cssSelector(".swiper-slide-active a");
     private By secondSliderLink = By.xpath("//div[@aria-label='2 / 2']//a");
+    private By sliderDiv=By.xpath("//*[@id=\"main\"]/div/div/div/div/div[1]");
 
     // Folow Us
     private By facebookIcon=By.xpath("//a[normalize-space()='Facebook']");
@@ -39,6 +40,7 @@ public class HomePage extends BasePage{
     private By wishListIcon=By.xpath("//*[@id=\"main\"]/div/div/div/div/div[4]/div[2]/div[3]/div/div[2]/div[3]/div[2]/button[3]");
     private By addToWishListMessage=By.xpath("//div[@class='bar-notification success']");
     private By addToWishListMessageContent=By.xpath("//p[@class='content']");
+    private By closeMessageButton=By.xpath("//*[@id=\"bar-notification\"]/div/span");
 
     //WishListLink
     private By wishListLink=By.cssSelector("a.ico-wishlist");
@@ -71,6 +73,11 @@ public class HomePage extends BasePage{
         return new Select(driver.findElement(currencyDropDown));
     }
     public void selectFromDropDown(String currency){
+        // need to wait all elements in the page to load
+        JavascriptExecutor js = (JavascriptExecutor) driver;
+        new WebDriverWait(driver, Duration.ofSeconds(10)).until(
+                webDriver -> js.executeScript("return document.readyState").equals("complete"));
+
         getDropDownElement().selectByVisibleText(currency);
     }
     public boolean checkPriceSymbolAllProducts(String symbol){
@@ -129,10 +136,15 @@ public class HomePage extends BasePage{
 
     //WishList functions
     public void clickOnWishIcon(){
+        // wait all page elements to load before any action
+        JavascriptExecutor js = (JavascriptExecutor) driver;
+        new WebDriverWait(driver, Duration.ofSeconds(10)).until(
+                webDriver -> js.executeScript("return document.readyState").equals("complete"));
+
         driver.findElement(wishListIcon).click();
     }
     public boolean checkMessageBoxApper(){
-        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
+        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(5));
         wait.until(ExpectedConditions.visibilityOfElementLocated(addToWishListMessage));
         return driver.findElement(addToWishListMessage).isDisplayed();
     }
@@ -147,5 +159,8 @@ public class HomePage extends BasePage{
     public WishListPage clickWishListLink(){
         driver.findElement(wishListLink).click();
         return new WishListPage(driver);
+    }
+    public  void clickCloseMessageButton(){
+        driver.findElement(closeMessageButton).click();
     }
 }
