@@ -49,8 +49,7 @@ src/
 │       └── RegisterTest.java          # User registration tests
 │
 ├── testng.xml                         # TestNG suite configuration
-├── allure-results/                    # Generated test results (auto-created)
-└── allure-report/                     # Generated HTML reports (auto-created)
+└── allure-results/                    # Generated test results (auto-created)
 ```
 
 ## ✨ Key Features
