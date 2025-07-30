@@ -1,10 +1,10 @@
 # E-Commerce Automation Testing Project
 
-A comprehensive Selenium WebDriver automation framework for testing the nopCommerce demo website using Java, TestNG, and the Page Object Model design pattern.
+A comprehensive Selenium WebDriver automation framework for testing the nopCommerce demo website using Java, TestNG, Page Object Model design pattern, and Allure reporting.
 
 ## 🚀 Project Overview
 
-This project automates end-to-end testing scenarios for an e-commerce application, covering user registration, login, product search, wishlist functionality, currency selection, and social media integrations.
+This project automates end-to-end testing scenarios for an e-commerce application, covering user registration, login, product search, wishlist functionality, currency selection, and social media integrations with comprehensive test reporting.
 
 **Test Site:** [nopCommerce Demo](https://demo.nopcommerce.com/)
 
@@ -14,8 +14,10 @@ This project automates end-to-end testing scenarios for an e-commerce applicatio
 - **Automation Tool:** Selenium WebDriver
 - **Testing Framework:** TestNG
 - **Design Pattern:** Page Object Model (POM)
-- **Build Tool:** Maven (implied)
+- **Build Tool:** Maven
 - **WebDriver Management:** WebDriverManager
+- **Reporting:** Allure Framework
+- **Test Results:** JSON, XML, and HTML reports
 
 ## 📁 Project Structure
 
@@ -46,7 +48,9 @@ src/
 │   └── Register/
 │       └── RegisterTest.java          # User registration tests
 │
-└── testng.xml                         # TestNG suite configuration
+├── testng.xml                         # TestNG suite configuration
+├── allure-results/                    # Generated test results (auto-created)
+└── allure-report/                     # Generated HTML reports (auto-created)
 ```
 
 ## ✨ Key Features
@@ -64,14 +68,65 @@ src/
 - **Wait Strategies:** Explicit waits for stable test execution
 - **Assertions:** Both hard and soft assertions using TestNG
 - **Sequential Test Execution:** Organized test suite with TestNG XML configuration
+- **Rich Reporting:** Allure framework integration with detailed test reports
+- **Screenshot Capture:** Automatic screenshot capture on test failures
+- **Test Analytics:** Comprehensive test metrics and trends
+
+## 📈 Report Analysis
+
+### Understanding Allure Reports
+
+**🟢 Passed Tests**
+- All assertions successful
+- No exceptions thrown
+- Expected behavior verified
+
+**🔴 Failed Tests**
+- Contains failure screenshots
+- Detailed error messages
+- Stack trace information
+- Reproduction steps
+
+**🟡 Broken Tests**
+- Infrastructure issues
+- Setup/teardown problems
+- Environment configuration errors
+
+**⏸️ Skipped Tests**
+- Dependency failures
+- Conditional execution
+- Configuration issues
 
 ## 🚦 Getting Started
 
 ### Prerequisites
 - Java 8 or higher
-- Maven
+- Maven 3.6 or higher
 - Chrome browser (primary)
 - IDE (IntelliJ IDEA/Eclipse recommended)
+- Allure Command Line Tool (for report generation)
+
+
+## 📊 Allure Reporting Features
+
+### 📈 Dashboard Overview
+- **Test execution summary** with pass/fail statistics
+- **Trend charts** showing test results over time
+- **Test duration** and performance metrics
+- **Flaky tests** identification and tracking
+
+### 📋 Detailed Test Reports
+- **Step-by-step execution** details
+- **Screenshots** for failed test cases
+- **Browser logs** and console outputs
+- **Test categories** and severity levels
+- **Environment information** and test configuration
+
+### 🔍 Advanced Analytics
+- **Test suites breakdown** by categories
+- **Execution timeline** with detailed timing
+- **Historical data** and trend analysis
+- **Custom labels** and test organization
 
 ## 📄 TestNG Configuration
 
@@ -103,18 +158,19 @@ The project includes a `testng.xml` file that orchestrates the execution of all 
 - **Sequential Execution:** `parallel="false"` ensures tests run one after another
 - **Organized Flow:** Tests are arranged logically starting with user registration, then login, followed by feature tests
 - **Complete Coverage:** All test classes are included in a single executable suite
+- **Allure Integration:** Automatic result generation during test execution
 
 ## 📋 Test Scenarios
 
-| Test Suite | Description | Test Cases |
-|------------|-------------|------------|
-| **Registration** | User account creation | Valid registration with confirmation |
-| **Login** | User authentication | Valid/Invalid login scenarios |
-| **Search** | Product discovery | Search by name, Search by SKU |
-| **Wishlist** | Product saving | Add to wishlist, Verify wishlist content |
-| **Currency** | Internationalization | Euro symbol validation |
-| **Social Media** | External integrations | Facebook, Twitter, YouTube, RSS links |
-| **UI Components** | Interactive elements | Homepage slider navigation |
+| Test Suite | Description | Test Cases | Report Category |
+|------------|-------------|------------|-----------------|
+| **Registration** | User account creation | Valid registration with confirmation | User Management |
+| **Login** | User authentication | Valid/Invalid login scenarios | Authentication |
+| **Search** | Product discovery | Search by name, Search by SKU | Product Features |
+| **Wishlist** | Product saving | Add to wishlist, Verify wishlist content | E-commerce |
+| **Currency** | Internationalization | Euro symbol validation | Localization |
+| **Social Media** | External integrations | Facebook, Twitter, YouTube, RSS links | External Links |
+| **UI Components** | Interactive elements | Homepage slider navigation | UI/UX |
 
 ## 📊 Test Execution Flow
 
@@ -126,15 +182,7 @@ The project includes a `testng.xml` file that orchestrates the execution of all 
 6. **Slider Tests** - Validate homepage UI components
 7. **Wishlist Tests** - Test product wishlist features
 
-## 🔧 Customization
+Each step is documented in the Allure report with detailed execution information.
 
-### Adding New Tests
-1. Create test class in appropriate package (`Home/`, `Login/`, `Register/`)
-2. Add the class to `testng.xml` in desired execution order
-3. Follow the existing Page Object Model pattern
 
-### Modifying Execution Order
-Edit the `testng.xml` file to rearrange the `<class>` elements in your preferred sequence.
 
-### Parallel Execution
-To enable parallel execution, change `parallel="false"` to `parallel="classes"` or `parallel="methods"` in the suite configuration.
