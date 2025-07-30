@@ -3,53 +3,76 @@ package Pages;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 
-public class RegisterPage extends BasePage{
-    //Personal Details
-    private By genderMaleField=By.id("gender-male");
-    private By genderFemaleField=By.id("gender-female");
-    private By firstaNmaeField=By.id("FirstName");
-    private By lastNameField=By.id("LastName");
-    private By emailField=By.id("Email");
+/**
+ * Represents the Register page.
+ * Provides methods to fill in registration fields and submit the form.
+ */
+public class RegisterPage extends BasePage {
 
-    //Company Details
-    private By companyNameField=By.id("Company");
+    // Personal Details
+    private By genderMaleField = By.id("gender-male");
+    private By genderFemaleField = By.id("gender-female");
+    private By firstNameField = By.id("FirstName");
+    private By lastNameField = By.id("LastName");
+    private By emailField = By.id("Email");
 
-    //Password Fields
-    private By passwordField=By.id("Password");
-    private By confirmPasswordField=By.id("ConfirmPassword");
+    // Company Details
+    private By companyNameField = By.id("Company");
 
-    //Register Button
-    private By registerButton=By.id("register-button");
+    // Password Fields
+    private By passwordField = By.id("Password");
+    private By confirmPasswordField = By.id("ConfirmPassword");
 
-    public RegisterPage(WebDriver driver){
+    // Register Button
+    private By registerButton = By.id("register-button");
+
+    /**
+     * Constructor for RegisterPage.
+     * @param driver WebDriver instance
+     */
+    public RegisterPage(WebDriver driver) {
         super(driver);
     }
 
-    //Select Gender
-    public void setGender(String gender){
-        if(gender.equalsIgnoreCase("male")){
+    /**
+     * Selects the gender based on the input value.
+     * @param gender The gender to select ("male" or "female")
+     */
+    public void setGender(String gender) {
+        if (gender.equalsIgnoreCase("male")) {
             driver.findElement(genderMaleField).click();
-        }
-        else {
+        } else {
             driver.findElement(genderFemaleField).click();
         }
     }
 
-    //Fill Personal Details
-    public void setPersonalDetailes(String firstname,String lastname,String email){
-        driver.findElement(firstaNmaeField).sendKeys(firstname);
-        driver.findElement(lastNameField).sendKeys(lastname);
+    /**
+     * Fills in the personal details for registration.
+     * @param firstName User's first name
+     * @param lastName  User's last name
+     * @param email     User's email address
+     */
+    public void setPersonalDetails(String firstName, String lastName, String email) {
+        driver.findElement(firstNameField).sendKeys(firstName);
+        driver.findElement(lastNameField).sendKeys(lastName);
         driver.findElement(emailField).sendKeys(email);
     }
 
-    //Fill Password and Confirm Password
-    public void setPasswordAndConfirm(String password,String confirmationPassword){
+    /**
+     * Fills in the password and confirmation password fields.
+     * @param password             The password to use
+     * @param confirmationPassword The confirmation password
+     */
+    public void setPasswordAndConfirm(String password, String confirmationPassword) {
         driver.findElement(passwordField).sendKeys(password);
         driver.findElement(confirmPasswordField).sendKeys(confirmationPassword);
     }
 
-    //Click Register
-    public RegisterResultPage clickRegister(){
+    /**
+     * Clicks the Register button and navigates to the registration result page.
+     * @return RegisterResultPage instance
+     */
+    public RegisterResultPage clickRegister() {
         driver.findElement(registerButton).click();
         return new RegisterResultPage(driver);
     }

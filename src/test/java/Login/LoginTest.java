@@ -4,49 +4,68 @@ import Pages.BasePage;
 import Pages.HomePage;
 import Pages.LoginPage;
 import base.BaseTest;
+import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
 
 public class LoginTest extends BaseTest {
 
-    @Test(priority = 0)
-    public void testValidLogIn(){
+    // Data provider for valid credentials
+    @DataProvider(name = "validLoginData")
+    public Object[][] validLoginData() {
+        return new Object[][] {
+                {"test@example02.com", "P@ssw0rd"},
+        };
+    }
+
+    // Data provider for invalid credentials
+    @DataProvider(name = "invalidLoginData")
+    public Object[][] invalidLoginData() {
+        return new Object[][] {
+                {"wrong@example.com", "P@ssw0rd"},
+        };
+    }
+
+    // Test for valid login scenarios
+    @Test(dataProvider = "validLoginData", priority = 0)
+    public void testValidLogIn(String email, String password){
         SoftAssert softAssert = new SoftAssert();
 
-        LoginPage loginPage=homepage.clickLogin();
-        loginPage.setEmail("test@example7.com");
-        loginPage.setPassword("P@ssw0rd");
-        BasePage homePage2= loginPage.clickLogIn();
+        LoginPage loginPage = homepage.clickLogin();
+        loginPage.setEmail(email);
+        loginPage.setPassword(password);
+        BasePage resultPage = loginPage.clickLogIn();
+        softAssert.assertEquals(driver.getCurrentUrl(), "https://demo.nopcommerce.com/", "URL after login is incorrect.");
 
-        softAssert.assertEquals(driver.getCurrentUrl(),"https://demo.nopcommerce.com/");
-        if (homePage2 instanceof HomePage) {
-            HomePage realHomePage2 = (HomePage) homePage2;
-            softAssert.assertTrue(realHomePage2.checkMyAccountLink());
+        if (resultPage instanceof HomePage) {
+            HomePage realHomePage = (HomePage) resultPage;
+            softAssert.assertTrue(realHomePage.checkMyAccountLink(), "My Account link is not visible after login.");
+        } else {
+            softAssert.fail("Login did not navigate to HomePage.");
         }
+
         softAssert.assertAll();
         homepage.clickLogOut();
     }
-
-    @Test(priority = 1)
-    public void testInvalidLogIn() {
+    // Test for Invalid login scenarios
+    @Test(dataProvider = "invalidLoginData", priority = 1)
+    public void testInvalidLogin(String email, String password) {
         SoftAssert softAssert = new SoftAssert();
 
-        LoginPage loginPage=homepage.clickLogin();
-        loginPage.setEmail("wrong@example.com");
-        loginPage.setPassword("P@ssw0rd");
-        BasePage loginPage2= loginPage.clickLogIn();
-        LoginPage realloginPage2=null;
+        LoginPage loginPage = homepage.clickLogin();
+        loginPage.setEmail(email);
+        loginPage.setPassword(password);
+        BasePage resultPage = loginPage.clickLogIn();
 
-        if (loginPage2 instanceof LoginPage) {
-            realloginPage2 = (LoginPage) loginPage2;
+        if (resultPage instanceof LoginPage) {
+            LoginPage returnedLoginPage = (LoginPage) resultPage;
+
+            softAssert.assertTrue(returnedLoginPage.checkErrorMessageApper(), "Error message did not appear after invalid login.");
+            softAssert.assertTrue(returnedLoginPage.checkErrorMessageText("Login was unsuccessful"), "Error message text is incorrect.");
+            softAssert.assertTrue(returnedLoginPage.checkErrorMessageColor(), "Error message color is not as expected.");
+        } else {
+            softAssert.fail("Invalid login should stay on LoginPage.");
         }
-
-        softAssert.assertTrue(realloginPage2.checkErrorMessageApper());
-        softAssert.assertTrue(realloginPage2.checkErrorMessageText("Login was unsuccessful"));
-        softAssert.assertTrue(realloginPage2.chechErrorMessageColor("#e4434b"));
-
         softAssert.assertAll();
-
-
     }
 }

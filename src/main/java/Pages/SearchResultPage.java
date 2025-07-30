@@ -6,36 +6,58 @@ import org.openqa.selenium.WebElement;
 
 import java.util.List;
 
-public class SearchResultPage extends BasePage{
+/**
+ * This class handles actions and validations on the Search Results Page.
+ */
+public class SearchResultPage extends BasePage {
 
-    private By productsTitle=By.xpath("//h2[@class='product-title']/a");
+    private final By productsTitle = By.xpath("//h2[@class='product-title']/a");
 
+    /**
+     * Constructor to initialize the SearchResultPage with a WebDriver instance.
+     * @param driver WebDriver instance used for interacting with the page
+     */
     public SearchResultPage(WebDriver driver) {
         super(driver);
     }
 
-    // check Title of Products
-    public boolean checkCurrentURL(String url){
+    /**
+     * Checks if the current URL contains the expected URL fragment.
+     * @param url The expected substring of the URL
+     * @return true if the URL contains the given substring, false otherwise
+     */
+    public boolean checkCurrentURL(String url) {
         return driver.getCurrentUrl().contains(url);
     }
-    public boolean checkTitleContainSearchWord(String word){
-        List<WebElement> titles =driver.findElements(productsTitle);
-        String title;
-        for(WebElement t:titles){
-            title=t.getText().toLowerCase();
-            if(!title.contains(word))
+
+    /**
+     * Validates that all product titles in the search result contain the search keyword.
+     * @param word The keyword that should be present in each product title
+     * @return true if all product titles contain the keyword, false if any title does not
+     */
+    public boolean checkTitleContainSearchWord(String word) {
+        List<WebElement> titles = driver.findElements(productsTitle);
+        for (WebElement title : titles) {
+            if (!title.getText().toLowerCase().contains(word.toLowerCase())) {
                 return false;
+            }
         }
         return true;
     }
-    public boolean checkSizeOfProducts(){
-        if(driver.findElements(productsTitle).size()>0)
-            return true;
-        return false;
+
+    /**
+     * Checks if there is at least one product displayed in the search results.
+     * @return true if at least one product is found, false otherwise
+     */
+    public boolean checkSizeOfProducts() {
+        return !driver.findElements(productsTitle).isEmpty();
     }
 
-    // check product with SKU
-    public ProductPage clickProductLink(){
+    /**
+     * Clicks the first product link from the search results and navigates to its product page.
+     * @return ProductPage instance representing the product detail page
+     */
+    public ProductPage clickProductLink() {
         driver.findElement(productsTitle).click();
         return new ProductPage(driver);
     }
